@@ -20,6 +20,7 @@ INTRODUCTION
 This block has been created to enable quick and simple awarding of pre-existing badges in a given course. Both existing students and non-students can be awarded badges using this block. In the case of non-students, their details are used to generate new student accounts, they are then enrolled on the relevant course and are emailed their Moodle login details.
 
 It allows a teacher to upload a CSV file and processes the file based on the specified columns, and these field values must also be included in the CSV file's first line. The badge information required is the course badge name, viewable under Course badges.
+
 firstname,lastname,email,badge
 
 USAGE
