@@ -1,0 +1,2 @@
+moodle-block_badgeawarder
+=========================
