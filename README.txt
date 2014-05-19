@@ -62,6 +62,6 @@ On the Preview page, if you are processing new users, you will also need to sele
 Once satisfied with the preview details, click on the "Award badges" button and the CSV file will be fully processed. 
 Once completed, the page will display the results of the CSV file upload, including 
 1) Total [Badges] awarded 
-2) number of accounts created 
+2) Number of accounts created 
 3) [Existing] Users Enrolled 
 4) Any award errors 
