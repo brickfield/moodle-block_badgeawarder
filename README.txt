@@ -9,7 +9,7 @@ Lead Developer: Bas Brands
 Moodle version: 2.5
 
 Github URL - https://github.com/learningtechnologyservices/moodle-block_badgeawarder 
-Documentation - https://github.com/learningtechnologyservices/moodle-badgeawarder/README.txt 
+Documentation - https://github.com/learningtechnologyservices/moodle-block_badgeawarder/blob/master/README.txt 
 
 Prerequisite
 
