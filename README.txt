@@ -11,17 +11,21 @@ Moodle version: 2.5
 Github URL - https://github.com/learningtechnologyservices/moodle-block_badgeawarder 
 Documentation - https://github.com/learningtechnologyservices/moodle-block_badgeawarder/blob/master/README.txt 
 
-Prerequisite
-
-In order to award a badge by using the Badge Awarder block, the badge itself must have been set up already and enabled, and particularly, set with the single criteria of "Manual issue by role". If the badge itself is set to either of the other two options, Course completion or Activity completion, it will not be successfully awarded by the Badge Awarder block.
-
 INTRODUCTION
 
 This block has been created to enable quick and simple awarding of pre-existing badges in a given course. Both existing students and non-students can be awarded badges using this block. In the case of non-students, their details are used to generate new student accounts, they are then enrolled on the relevant course and are emailed their Moodle login details.
 
 It allows a teacher to upload a CSV file and processes the file based on the specified columns, and these field values must also be included in the CSV file's first line. The badge information required is the course badge name, viewable under Course badges.
 
+CSV file format
 firstname,lastname,email,badge
+
+Prerequisites
+
+In order to award a badge by using the Badge Awarder block, the badge itself must have been set up already and enabled, and particularly, set with the single criteria of "Manual issue by role". If the badge itself is set to either of the other two options, Course completion or Activity completion, it will not be successfully awarded by the Badge Awarder block.
+In order to enrol either existing students or non-students as part of their badge awarding, the relevant course itself must be enabled for manual enrolments.
+The Badge Awarder block also expects to work with a sitewide unique user emails policy, which the CSV upload file must also follow.
+Enrolment of non-students may be inadvisable for Moodle sites which serve as MNet service providers, due to user account identification and authentication limitations.
 
 USAGE
 
