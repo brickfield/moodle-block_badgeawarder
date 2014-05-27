@@ -82,6 +82,7 @@ class block_badgeawarder_step1_form extends moodleform {
         block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder')
         );
         $mform->addElement('select', 'mode', get_string('mode', 'block_badgeawarder'), $choices);
+        $mform->setDefault('mode', block_badgeawarder_processor::MODE_UPDATE_ONLY);
         $mform->addHelpButton('mode', 'mode', 'block_badgeawarder');
 
         $this->add_action_buttons(true, get_string('preview'));
