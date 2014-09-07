@@ -61,7 +61,8 @@ class block_badgeawarder extends block_base {
             return $this->content;
         }
 
-        $context = get_context_instance(CONTEXT_COURSE, $this->page->course->id);
+        //$context = get_context_instance(CONTEXT_COURSE, $this->page->course->id);
+        $context = context_course::instance($this->page->course->id);
 
         if (has_capability('moodle/badgeawarder:uploadcsv', $context)) {
             $linkurl = new moodle_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $this->page->course->id));
