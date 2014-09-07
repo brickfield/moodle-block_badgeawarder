@@ -189,6 +189,10 @@ class block_badgeawarder_processor {
             }
             if ($user = $this->get_user($data)) {
                 if ($user->new) {
+                    $user->firstnamephonetic = '';
+                    $user->lastnamephonetic = '';
+                    $user->middlename = '';
+                    $user->alternatename = '';
                     $accountscreated++;
                 }
             } else {
