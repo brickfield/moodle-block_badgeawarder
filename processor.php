@@ -337,7 +337,6 @@ class block_badgeawarder_processor {
     }
 
     private function get_enrolments() {
-        //$context = get_context_instance(CONTEXT_COURSE, $this->courseid);
         $context = context_course::instance($this->courseid);
         return get_enrolled_users($context);
     }
@@ -355,7 +354,6 @@ class block_badgeawarder_processor {
     private function send_email($user) {
         global $CFG;
         $user->siteurl = $CFG->wwwroot;
-        //$supportuser = generate_email_supportuser();
         $supportuser = core_user::get_support_user();
 
         $emailawardsubject = get_string('emailawardsubject', 'block_badgeawarder');
