@@ -189,10 +189,6 @@ class block_badgeawarder_processor {
             }
             if ($user = $this->get_user($data)) {
                 if ($user->new) {
-                    $user->firstnamephonetic = '';
-                    $user->lastnamephonetic = '';
-                    $user->middlename = '';
-                    $user->alternatename = '';
                     $accountscreated++;
                 }
             } else {
@@ -309,6 +305,10 @@ class block_badgeawarder_processor {
             $user->email = $data['email'];
             $user->firstname = $data['firstname'];
             $user->lastname = $data['lastname'];
+            $user->firstnamephonetic = '';
+            $user->lastnamephonetic = '';
+            $user->middlename = '';
+            $user->alternatename = '';
             $user->idnumber = '';
             $user->timemodified = time();
             $user->timecreated  = time();
