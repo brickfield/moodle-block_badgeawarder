@@ -41,10 +41,10 @@ $string['completion'] = 'Completion';
 $string['selectcountry'] = 'Select Default Country';
 $string['csv'] = 'The badge CSV file';
 $string['csvdelimiter'] = 'CSV delimiter';
-$string['csvfileerror'] = 'There was an error in you CSV upload file';
+$string['csvfileerror'] = 'There was an error in your CSV upload file';
 $string['csvline'] = 'CSV line';
 $string['emailawardsubject'] = 'You have received a badge';
-$string['emailawardtextnew'] = 'Contratulations you have receive a {$a->badgename} badge.<br>
+$string['emailawardtextnew'] = 'Congratulations you have received a {$a->badgename} badge.<br>
 <br>
 To access Moodle, got to: {$a->siteurl}
 <br>
@@ -54,7 +54,7 @@ Your current login information is now:<br>
 <br>
 you will have to change your password when you login for the first time.<br>
 ';
-$string['emailawardtextexisting'] = 'Contratulations you have receive a {$a->badgename} badge.<br>
+$string['emailawardtextexisting'] = 'Congratulations you have received a {$a->badgename} badge.<br>
 <br>
 To access your badge visit {$a->siteurl}
 ';
