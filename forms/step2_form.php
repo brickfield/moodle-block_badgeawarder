@@ -34,7 +34,7 @@ class block_badgeawarder_step2_form extends moodleform {
      */
     public function definition() {
         $mform = $this->_form;
-        $data    = $this->_customdata['data'];
+        $data  = $this->_customdata['data'];
 
         $mform->addElement('hidden', 'courseid', $data['courseid']);
         $mform->setType('courseid', PARAM_INT);

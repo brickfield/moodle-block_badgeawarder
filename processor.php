@@ -48,6 +48,11 @@ class block_badgeawarder_processor {
      */
     const UPDATE_NOTHING = 0;
 
+    /**
+     * @bool true if there is really nothing to do.
+     */
+    public $nothingtodo;
+
     /** @var int processor mode. */
     protected $mode;
 
@@ -162,6 +167,7 @@ class block_badgeawarder_processor {
         $this->get_enrolmentinstance();
 
         $existingemails = $this->get_existing_useremailaddresses();
+        $existingusernames = $this->get_existing_usernames();
 
         // Loop over the CSV lines.
         while ($line = $this->cir->next()) {
@@ -172,7 +178,7 @@ class block_badgeawarder_processor {
             $data = $this->parse_line($line);
 
             // Get or create user.
-            if (array_key_exists($data['email'], $existingemails)) {
+            if (array_key_exists($data['email'], $existingemails) || array_key_exists($data['email'], $existingusernames)) {
                 if ($this->mode == self::MODE_CREATE_NEW) {
                     $result = false;
                     $status = get_string('statusskipexistinguser', 'block_badgeawarder');
@@ -180,6 +186,12 @@ class block_badgeawarder_processor {
                     continue;
                 }
             } else {
+                if (!validate_email($data['email'])) {
+                    $result = false;
+                    $status = get_string('statusskipinvalidemail', 'block_badgeawarder');
+                    $tracker->output($this->linenb, false, $status, $data);
+                    continue;
+                }
                 if ($this->mode == self::MODE_UPDATE_ONLY) {
                     $result = false;
                     $status = get_string('statusskipnewuser', 'block_badgeawarder');
@@ -295,6 +307,10 @@ class block_badgeawarder_processor {
     private function get_user($data) {
         global $CFG, $DB;
         if ($existinguser = $DB->get_record('user', array('email' => $data['email']))) {
+            $existinguser->new = false;
+            return $existinguser;
+        }
+        if ($existinguser = $DB->get_record('user', array('username' => $data['email']))) {
             $existinguser->new = false;
             return $existinguser;
         }
@@ -433,6 +449,12 @@ class block_badgeawarder_processor {
         return (array) $DB->get_records_sql($sql);
     }
 
+    protected function get_existing_usernames() {
+        global $DB;
+        $sql = "SELECT DISTINCT(username) FROM {user} where DELETED = 0 ORDER BY username";
+        return (array) $DB->get_records_sql($sql);
+    }
+
     protected function check_required_fields($data) {
         $checkedfields = 0;
 
@@ -483,9 +505,10 @@ class block_badgeawarder_processor {
         raise_memory_limit(MEMORY_EXTRA);
 
         $existingemails = $this->get_existing_useremailaddresses();
+        $existingusernames = $this->get_existing_usernames();
 
+        $nothingtodo = true;
         // Loop over the CSV lines.
-        $preview = array();
         while (($line = $this->cir->next()) && $rows > $this->linenb) {
             $this->linenb++;
             $data = $this->parse_line($line);
@@ -512,7 +535,7 @@ class block_badgeawarder_processor {
                 $status[] = get_string('statusbadgecriteriaerror', 'block_badgeawarder');
             }
 
-            if (array_key_exists($data['email'], $existingemails)) {
+            if (array_key_exists($data['email'], $existingemails) || array_key_exists($data['email'], $existingusernames) ) {
                 if ($this->mode == self::MODE_CREATE_NEW) {
                     $result = false;
                     $status[] = get_string('statusskipexistinguser', 'block_badgeawarder');
@@ -522,9 +545,25 @@ class block_badgeawarder_processor {
                     $result = false;
                     $status[] = get_string('statusskipnewuser', 'block_badgeawarder');
                 }
+                if (!validate_email($data['email'])) {
+                    $result = false;
+                    $status[] = get_string('statusskipinvalidemail', 'block_badgeawarder');
+                }
+                
             }
-
+            if ($result) {
+                $nothingtodo = false;
+            }
             $tracker->output($this->linenb, $result, $status, $data);
+        }
+
+        // Check if there are more records then in preview
+        if (!$nothingtodo){
+            $this->nothingtodo = false;
+        } else if ($this->cir->next()) {
+            $this->nothingtodo = false;
+        } else {
+            $this->nothingtodo = true;
         }
 
         $tracker->finish();
@@ -548,9 +587,11 @@ class block_badgeawarder_processor {
      * @return void
      */
     protected function validate() {
+        global $COURSE;
         foreach ($this->filecolumns as $requiredcolumn) {
             if (!in_array($requiredcolumn, $this->columns)) {
-                throw new moodle_exception('csvloaderror', 'error');
+                $returnlink = new moodle_url('/course/view.php', array('id' => $COURSE->id));
+                throw new moodle_exception('csvloaderror', 'error', $returnlink, get_string('csvformaterror', 'block_badgeawarder'), '');
             }
         }
         if (empty($this->columns)) {

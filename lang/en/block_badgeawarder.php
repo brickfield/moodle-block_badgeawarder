@@ -44,6 +44,8 @@ $string['selectcountry'] = 'Select Default Country';
 $string['csv'] = 'The badge CSV file';
 $string['csvdelimiter'] = 'CSV delimiter';
 $string['csvfileerror'] = 'There was an error in your CSV upload file';
+$string['csvformaterror'] = '<br>The CSV manager failed to find all required fields, The BadgeAwarder requires
+the fields firstname, lastname, badge, email on the first row.<br>If you receive this message either one of these fields were missing or you have not chosen the correct field delimiter.';
 $string['csvline'] = 'CSV line';
 $string['emailawardsubject'] = 'You have received a badge';
 $string['emailawardtextnew'] = 'Congratulations you have received a {$a->badgename} badge.<br>
@@ -68,6 +70,8 @@ $string['line'] = 'Line';
 $string['missingbadge'] = 'Badge not found';
 $string['mode'] = 'Upload mode';
 $string['mode_help'] = 'This allows you to specify if badges can be created and/or updated.';
+$string['nothingtodo'] = 'There are no users in the CSV file that can be awarded a Badge';
+$string['nothingtodobutton'] = 'Go Back';
 $string['pluginname'] = 'Badge Awarder';
 $string['preview'] = 'Preview:';
 $string['previewskipexisting'] = 'Skipping Existing user';
@@ -79,6 +83,7 @@ $string['returntocourse'] = 'Return to course';
 $string['rowpreviewnum'] = 'Preview rows';
 $string['rowpreviewnum_help'] = 'Number of rows from the CSV file that will be previewed in the next page. This option exists in
 order to limit the next page size.';
+$string['samplecsv'] = 'Download a sample csv file';
 $string['statusok'] = 'Ok';
 $string['statusgetuserfailed'] = 'Creating or getting user failed';
 $string['statusbadgealreadyawarded'] = 'Badge already awarded';
@@ -87,6 +92,7 @@ $string['statusbadgenotexist'] = 'Badge does not exist';
 $string['statusemailinvited'] = 'Emailed new user';
 $string['statusemailnotified'] = 'Existing user notified';
 $string['statusemailfailed'] = 'Could not send email';
+$string['statusskipinvalidemail'] = 'Invalid email address';
 $string['statusskipnewuser'] = 'Skipping new user';
 $string['statusskipexistinguser'] = 'Skipping existing user';
 $string['statusmissingfields'] = 'Missing required fields';
@@ -95,6 +101,10 @@ $string['statusbadgecriteriaerror'] = 'Badge not manually awarded or has additio
 $string['uploadbadgespreview'] = 'Upload Badges Preview';
 $string['uploadcsv'] = 'Upload CSV';
 $string['uploadbadgecsv'] = 'Upload Badges CSV';
+$string['uploadbadgecsv_help'] = ' Each line of the file contains one record
+ Each record is a series of data separated by commas (or other delimiters)
+ The first record contains a list of fieldnames defining the format of the rest of the file
+ Required fieldnames are firstname, lastname, email, badge';
 $string['usersawarded'] = 'Users Awarded';
 $string['usersenrolled'] = 'Users Enrolled: {$a}';
 $string['usersettings'] = 'Default New User Settings';

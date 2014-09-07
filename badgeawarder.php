@@ -80,6 +80,10 @@ if (empty($importid)) {
         $PAGE->navbar->add(get_string('uploadcsv', 'block_badgeawarder'), '', navigation_node::TYPE_CUSTOM);
 
         echo $OUTPUT->header(get_string('badgecsv', 'block_badgeawarder'));
+        $samplecsv = html_writer::link(new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'), get_string('samplecsv', 'block_badgeawarder'));
+        $icon = new help_icon('uploadbadgecsv', 'block_badgeawarder');
+        echo $OUTPUT->heading(get_string('uploadbadgecsv', 'block_badgeawarder') . $OUTPUT->render($icon));
+
         $mform1->display();
         echo $OUTPUT->single_button(new moodle_url('/course/view.php', array('id' => $course->id)), get_string('back'), '');
         echo $OUTPUT->footer();
@@ -99,6 +103,8 @@ if (!empty($form1data)) {
 
 $mform2 = new block_badgeawarder_step2_form(null, array('data' => $data));
 
+$returnurl = new moodle_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $course->id));
+
 // If a file has been uploaded, then process it.
 if ($mform2->is_cancelled()) {
     $cir->cleanup(true);
@@ -116,5 +122,10 @@ if ($mform2->is_cancelled()) {
     block_badgeawarder_page_header($course, $context);
     echo $OUTPUT->header(get_string('badgecsvpreview', 'block_badgeawarder'));
     $processor->preview($previewrows);
-    $mform2->display();
+    if ($processor->nothingtodo) {
+        echo html_writer::tag('div', get_string('nothingtodo', 'block_badgeawarder'), array('class' => 'alert alert-warning'));
+        echo $OUTPUT->single_button($returnurl, get_string('nothingtodobutton', 'block_badgeawarder'));
+    } else {
+        $mform2->display();
+    }
 }

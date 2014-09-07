@@ -44,15 +44,18 @@ class block_badgeawarder_step1_form extends moodleform {
     public function definition() {
         $mform = $this->_form;
 
-        $mform->addElement('header', null, get_string('csv', 'block_badgeawarder'));
+        $mform->addElement('header', null, get_string('upload'));
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
         $mform->setType('courseid', PARAM_INT);
 
         $mform->addElement('hidden', 'contextid', '');
         $mform->setType('contextid', PARAM_INT);
 
-        $mform->addElement('filepicker', 'badgecsv', '', null, null);
+        $mform->addElement('filepicker', 'badgecsv', get_string('file'), null, null);
         $mform->addRule('badgecsv', null, 'required');
+
+        $samplecsv = html_writer::link(new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'), get_string('samplecsv', 'block_badgeawarder'));
+        $mform->addElement('static', 'samplecsv', '', $samplecsv);
 
         $choices = csv_import_reader::get_delimiter_list();
         $mform->addElement('select', 'delimiter_name', get_string('csvdelimiter', 'block_badgeawarder'), $choices);
