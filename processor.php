@@ -345,7 +345,7 @@ class block_badgeawarder_processor {
             $user->newpassword = generate_password();
             $user->password = hash_internal_user_password($user->newpassword, true);
             if ($user->id = $DB->insert_record('user', $user)) {
-                set_user_preference('auth_forcepasswordchange', 1, $user);
+                //set_user_preference('auth_forcepasswordchange', 1, $user);
                 $user->new = true;
                 return $user;
             } else {
