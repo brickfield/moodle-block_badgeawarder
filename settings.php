@@ -42,7 +42,7 @@ if ($ADMIN->fulltree) {
         block_badgeawarder_processor::MODE_CREATE_ALL => get_string('awardall', 'block_badgeawarder'),
         block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder')
     );
-    
+
     $select = new admin_setting_configselect(
         'block_badgeawarder/defaultuploadtype',
         get_string('defaultuploadtype', 'block_badgeawarder'),

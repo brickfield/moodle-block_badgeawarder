@@ -210,7 +210,7 @@ class block_badgeawarder_processor {
                     $status = get_string('statusbadgecriteriaerror', 'block_badgeawarder');
                     $tracker->output($this->linenb, false, $status, $data);
                     continue;
-                } 
+                }
             } else {
                 $status = get_string('statusbadgenotexist', 'block_badgeawarder');
                 $tracker->output($this->linenb, false, $status, $data);
@@ -349,7 +349,6 @@ class block_badgeawarder_processor {
             $user->newpassword = generate_password();
             $user->password = hash_internal_user_password($user->newpassword, true);
             if ($user->id = $DB->insert_record('user', $user)) {
-                //set_user_preference('auth_forcepasswordchange', 1, $user);
                 $user->new = true;
                 return $user;
             } else {
@@ -553,7 +552,6 @@ class block_badgeawarder_processor {
                     $result = false;
                     $status[] = get_string('statusskipinvalidemail', 'block_badgeawarder');
                 }
-                
             }
             if ($result) {
                 $nothingtodo = false;
@@ -561,15 +559,14 @@ class block_badgeawarder_processor {
             $tracker->output($this->linenb, $result, $status, $data);
         }
 
-        // Check if there are more records then in preview
-        if (!$nothingtodo){
+        // Check if there are more records then in preview.
+        if (!$nothingtodo) {
             $this->nothingtodo = false;
         } else if ($this->cir->next()) {
             $this->nothingtodo = false;
         } else {
             $this->nothingtodo = true;
         }
-
         $tracker->finish();
     }
 
@@ -595,7 +592,8 @@ class block_badgeawarder_processor {
         foreach ($this->filecolumns as $requiredcolumn) {
             if (!in_array($requiredcolumn, $this->columns)) {
                 $returnlink = new moodle_url('/course/view.php', array('id' => $COURSE->id));
-                throw new moodle_exception('csvloaderror', 'error', $returnlink, get_string('csvformaterror', 'block_badgeawarder'), '');
+                throw new moodle_exception('csvloaderror', 'error',
+                    $returnlink, get_string('csvformaterror', 'block_badgeawarder'), '');
             }
         }
         if (empty($this->columns)) {

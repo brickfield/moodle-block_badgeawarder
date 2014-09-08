@@ -54,7 +54,8 @@ class block_badgeawarder_step1_form extends moodleform {
         $mform->addElement('filepicker', 'badgecsv', get_string('file'), null, null);
         $mform->addRule('badgecsv', null, 'required');
 
-        $samplecsv = html_writer::link(new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'), get_string('samplecsv', 'block_badgeawarder'));
+        $samplecsv = html_writer::link(new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'),
+            get_string('samplecsv', 'block_badgeawarder'));
         $mform->addElement('static', 'samplecsv', '', $samplecsv);
 
         $choices = csv_import_reader::get_delimiter_list();
@@ -78,16 +79,15 @@ class block_badgeawarder_step1_form extends moodleform {
 
         $config = get_config('block_badgeawarder');
 
-        if (!empty($config->allowuploadtypechoosing) && ($config->allowuploadtypechoosing == 1)){
+        if (!empty($config->allowuploadtypechoosing) && ($config->allowuploadtypechoosing == 1)) {
             $mform->addElement('header', 'importoptionshdr', get_string('importoptions', 'block_badgeawarder'));
             $mform->setExpanded('importoptionshdr', true);
-            
+
             $choices = array(
             block_badgeawarder_processor::MODE_CREATE_NEW => get_string('awardnew', 'block_badgeawarder'),
             block_badgeawarder_processor::MODE_CREATE_ALL => get_string('awardall', 'block_badgeawarder'),
             block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder')
-            );
-            
+
             $mform->addElement('select', 'mode', get_string('mode', 'block_badgeawarder'), $choices);
             if (!empty($config->defaultuploadtype)) {
                 $mform->setDefault('mode', $config->defaultuploadtype);

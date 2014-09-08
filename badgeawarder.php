@@ -80,7 +80,8 @@ if (empty($importid)) {
         $PAGE->navbar->add(get_string('uploadcsv', 'block_badgeawarder'), '', navigation_node::TYPE_CUSTOM);
 
         echo $OUTPUT->header(get_string('badgecsv', 'block_badgeawarder'));
-        $samplecsv = html_writer::link(new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'), get_string('samplecsv', 'block_badgeawarder'));
+        $samplecsv = html_writer::link(new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'),
+            get_string('samplecsv', 'block_badgeawarder'));
         $icon = new help_icon('uploadbadgecsv', 'block_badgeawarder');
         echo $OUTPUT->heading(get_string('uploadbadgecsv', 'block_badgeawarder') . $OUTPUT->render($icon));
 
