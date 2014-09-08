@@ -36,6 +36,10 @@ class block_badgeawarder extends block_base {
         $this->title = get_string('blockname', 'block_badgeawarder');
     }
 
+    public function has_config() {
+        return true;
+    }
+
     public function instance_allow_multiple() {
         return false;
     }

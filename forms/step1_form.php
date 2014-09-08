@@ -76,17 +76,33 @@ class block_badgeawarder_step1_form extends moodleform {
         $mform->setType('previewrows', PARAM_INT);
         $mform->addHelpButton('previewrows', 'rowpreviewnum', 'block_badgeawarder');
 
-        $mform->addElement('header', 'importoptionshdr', get_string('importoptions', 'block_badgeawarder'));
-        $mform->setExpanded('importoptionshdr', true);
+        $config = get_config('block_badgeawarder');
 
-        $choices = array(
-        block_badgeawarder_processor::MODE_CREATE_NEW => get_string('awardnew', 'block_badgeawarder'),
-        block_badgeawarder_processor::MODE_CREATE_ALL => get_string('awardall', 'block_badgeawarder'),
-        block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder')
-        );
-        $mform->addElement('select', 'mode', get_string('mode', 'block_badgeawarder'), $choices);
-        $mform->setDefault('mode', block_badgeawarder_processor::MODE_UPDATE_ONLY);
-        $mform->addHelpButton('mode', 'mode', 'block_badgeawarder');
+        if (!empty($config->allowuploadtypechoosing) && ($config->allowuploadtypechoosing == 1)){
+            $mform->addElement('header', 'importoptionshdr', get_string('importoptions', 'block_badgeawarder'));
+            $mform->setExpanded('importoptionshdr', true);
+            
+            $choices = array(
+            block_badgeawarder_processor::MODE_CREATE_NEW => get_string('awardnew', 'block_badgeawarder'),
+            block_badgeawarder_processor::MODE_CREATE_ALL => get_string('awardall', 'block_badgeawarder'),
+            block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder')
+            );
+            
+            $mform->addElement('select', 'mode', get_string('mode', 'block_badgeawarder'), $choices);
+            if (!empty($config->defaultuploadtype)) {
+                $mform->setDefault('mode', $config->defaultuploadtype);
+            } else {
+                $mform->setDefault('mode', block_badgeawarder_processor::MODE_CREATE_ALL);
+            }
+            $mform->addHelpButton('mode', 'mode', 'block_badgeawarder');
+        } else {
+            if (!empty($config->defaultuploadtype)) {
+                $mform->addElement('hidden', 'mode', $config->defaultuploadtype);
+            } else {
+                $mform->addElement('hidden', 'mode', block_badgeawarder_processor::MODE_CREATE_ALL);
+            }
+            $mform->setType('mode', PARAM_INT);
+        }
 
         $this->add_action_buttons(true, get_string('preview'));
     }

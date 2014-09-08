@@ -48,6 +48,7 @@ $string['csvfileerror'] = 'There was an error in your CSV upload file';
 $string['csvformaterror'] = '<br>The CSV manager failed to find all required fields, The BadgeAwarder requires
 the fields firstname, lastname, badge, email on the first row.<br>If you receive this message either one of these fields were missing or you have not chosen the correct field delimiter.';
 $string['csvline'] = 'CSV line';
+$string['defaultuploadtype'] = 'Default upload type';
 $string['emailawardsubject'] = 'You have received a badge';
 $string['emailawardtextnew'] = 'Congratulations you have received a {$a->badgename} badge.<br>
 <br>
