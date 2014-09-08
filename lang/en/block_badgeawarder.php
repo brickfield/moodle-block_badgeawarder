@@ -23,7 +23,6 @@
  */
 
 $string['accountscreated'] = 'The number of accounts created: {$a}';
-$string['allowuploadtypechoosing'] = 'Allow choosing the Upload type';
 $string['awardall'] = 'Award to all users, create non-existing users';
 $string['awardbadges'] = 'Award badges';
 $string['awarderrors'] = 'Award errors: {$a}';
@@ -49,6 +48,9 @@ $string['csvformaterror'] = '<br>The CSV manager failed to find all required fie
 the fields firstname, lastname, badge, email on the first row.<br>If you receive this message either one of these fields were missing or you have not chosen the correct field delimiter.';
 $string['csvline'] = 'CSV line';
 $string['defaultuploadtype'] = 'Default upload type';
+$string['defaultdelimiter'] = 'Default delimiter';
+$string['defaultencoding'] = 'Default encoding';
+$string['defaultpreviewrows'] = 'Default number of preview rows';
 $string['emailawardsubject'] = 'You have received a badge';
 $string['emailawardtextnew'] = 'Congratulations you have received a {$a->badgename} badge.<br>
 <br>
@@ -86,6 +88,7 @@ $string['rowpreviewnum'] = 'Preview rows';
 $string['rowpreviewnum_help'] = 'Number of rows from the CSV file that will be previewed in the next page. This option exists in
 order to limit the next page size.';
 $string['samplecsv'] = 'Download a sample csv file';
+$string['showextendedoption'] = 'Show Extended Options';
 $string['statusok'] = 'Ok';
 $string['statusgetuserfailed'] = 'Creating or getting user failed';
 $string['statusbadgealreadyawarded'] = 'Badge already awarded';

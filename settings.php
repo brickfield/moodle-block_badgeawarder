@@ -28,8 +28,8 @@ require_once($CFG->dirroot .'/blocks/badgeawarder/processor.php');
 
 if ($ADMIN->fulltree) {
     $checkbox = new admin_setting_configcheckbox(
-        'block_badgeawarder/allowuploadtypechoosing',
-        get_string('allowuploadtypechoosing', 'block_badgeawarder'),
+        'block_badgeawarder/showextendedoption',
+        get_string('showextendedoption', 'block_badgeawarder'),
         '',
         0,
         1,
@@ -50,5 +50,42 @@ if ($ADMIN->fulltree) {
         block_badgeawarder_processor::MODE_CREATE_ALL,
         $choices
     );
+
+    $settings->add($select);
+
+    $choices = csv_import_reader::get_delimiter_list();
+
+    $select = new admin_setting_configselect(
+        'block_badgeawarder/defaultdelimiter',
+        get_string('defaultdelimiter', 'block_badgeawarder'),
+        '',
+        'comma',
+        $choices
+    );
+
+    $settings->add($select);
+
+    $choices = textlib::get_encodings();
+
+    $select = new admin_setting_configselect(
+        'block_badgeawarder/defaultencoding',
+        get_string('defaultencoding', 'block_badgeawarder'),
+        '',
+        'UTF-8',
+        $choices
+    );
+    
+    $settings->add($select);
+
+    $choices = array('10' => 10, '20' => 20, '100' => 100, '1000' => 1000, '100000' => 100000);
+
+    $select = new admin_setting_configselect(
+        'block_badgeawarder/defaultpreviewrows',
+        get_string('defaultpreviewrows', 'block_badgeawarder'),
+        '',
+        '100',
+        $choices
+    );
+    
     $settings->add($select);
 }

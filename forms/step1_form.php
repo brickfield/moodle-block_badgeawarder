@@ -58,28 +58,42 @@ class block_badgeawarder_step1_form extends moodleform {
             get_string('samplecsv', 'block_badgeawarder'));
         $mform->addElement('static', 'samplecsv', '', $samplecsv);
 
-        $choices = csv_import_reader::get_delimiter_list();
-        $mform->addElement('select', 'delimiter_name', get_string('csvdelimiter', 'block_badgeawarder'), $choices);
-        if (array_key_exists('cfg', $choices)) {
-            $mform->setDefault('delimiter_name', 'cfg');
-        } else if (get_string('listsep', 'langconfig') == ';') {
-            $mform->setDefault('delimiter_name', 'semicolon');
-        } else {
-            $mform->setDefault('delimiter_name', 'comma');
-        }
-
-        $choices = textlib::get_encodings();
-        $mform->addElement('select', 'encoding', get_string('encoding', 'block_badgeawarder'), $choices);
-        $mform->setDefault('encoding', 'UTF-8');
-
-        $choices = array('10' => 10, '20' => 20, '100' => 100, '1000' => 1000, '100000' => 100000);
-        $mform->addElement('select', 'previewrows', get_string('rowpreviewnum', 'block_badgeawarder'), $choices);
-        $mform->setType('previewrows', PARAM_INT);
-        $mform->addHelpButton('previewrows', 'rowpreviewnum', 'block_badgeawarder');
-
         $config = get_config('block_badgeawarder');
 
-        if (!empty($config->allowuploadtypechoosing) && ($config->allowuploadtypechoosing == 1)) {
+        if (!empty($config->showextendedoption) && ($config->showextendedoption == 1)) {
+            $choices = csv_import_reader::get_delimiter_list();
+            $mform->addElement('select', 'delimiter_name', get_string('csvdelimiter', 'block_badgeawarder'), $choices);
+            
+            if (!empty($config->defaultdelimiter)) {
+                $mform->setDefault('delimiter_name', $config->defaultdelimiter);
+            } else if (array_key_exists('cfg', $choices)) {
+                $mform->setDefault('delimiter_name', 'cfg');
+            } else if (get_string('listsep', 'langconfig') == ';') {
+                $mform->setDefault('delimiter_name', 'semicolon');
+            } else {
+                $mform->setDefault('delimiter_name', 'comma');
+            }
+
+            $choices = textlib::get_encodings();
+            $mform->addElement('select', 'encoding', get_string('encoding', 'block_badgeawarder'), $choices);
+
+            if (!empty($config->defaultencoding)) {
+                $mform->setDefault('encoding', $config->defaultencoding);
+            } else {
+                $mform->setDefault('encoding', 'UTF-8');
+            }
+
+            $choices = array('10' => 10, '20' => 20, '100' => 100, '1000' => 1000, '100000' => 100000);
+            $mform->addElement('select', 'previewrows', get_string('rowpreviewnum', 'block_badgeawarder'), $choices);
+            $mform->setType('previewrows', PARAM_INT);
+            $mform->addHelpButton('previewrows', 'rowpreviewnum', 'block_badgeawarder');
+            if (!empty($config->defaultpreviewrows)) {
+                $mform->setDefault('previewrows', $config->defaultpreviewrows);
+            } else {
+                $mform->setDefault('previewrows', '100');
+            }
+
+        
             $mform->addElement('header', 'importoptionshdr', get_string('importoptions', 'block_badgeawarder'));
             $mform->setExpanded('importoptionshdr', true);
 
@@ -96,6 +110,31 @@ class block_badgeawarder_step1_form extends moodleform {
             }
             $mform->addHelpButton('mode', 'mode', 'block_badgeawarder');
         } else {
+            // Set delimiter.
+            if (!empty($config->defaultdelimiter)) {
+                $mform->addElement('hidden', 'delimiter_name', $config->defaultdelimiter);
+            } else {
+                $mform->addElement('hidden', 'delimiter_name', 'comma');
+            }
+            $mform->setType('delimiter_name', PARAM_ALPHA);
+
+            // Set encoding.
+            if (!empty($config->defaultencoding)) {
+                $mform->addElement('hidden', 'encoding', $config->defaultencoding);
+            } else {
+                $mform->addElement('hidden', 'encoding', 'UTF-8');
+            }
+            $mform->setType('encoding', PARAM_RAW);
+
+            // Set previewrows.
+            if (!empty($config->defaultpreviewrows)) {
+                $mform->addElement('hidden', 'previewrows', $config->defaultpreviewrows);
+            } else {
+                $mform->addElement('hidden', 'previewrows', '100');
+            }
+            $mform->setType('previewrows', PARAM_INT);
+
+            // Set upload type.
             if (!empty($config->defaultuploadtype)) {
                 $mform->addElement('hidden', 'mode', $config->defaultuploadtype);
             } else {
