@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of the plugin Block Badgeawarder
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
  */
 
 $string['accountscreated'] = 'The number of accounts created: {$a}';
+$string['allowuploadtypechoosing'] = 'Allow choosing the Upload type';
 $string['awardall'] = 'Award to all users, create non-existing users';
 $string['awardbadges'] = 'Award badges';
 $string['awarderrors'] = 'Award errors: {$a}';
