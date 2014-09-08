@@ -199,6 +199,24 @@ class block_badgeawarder_processor {
                     continue;
                 }
             }
+
+            // Check badge.
+            if ($badge = $this->get_badge($data['badge'])) {
+                if ($badge->type != 2) {
+                    $status = get_string('statuscoursebadgeonly', 'block_badgeawarder');
+                    $tracker->output($this->linenb, false, $status, $data);
+                    continue;
+                } else if (!$this->check_badge_criteria($badge)) {
+                    $status = get_string('statusbadgecriteriaerror', 'block_badgeawarder');
+                    $tracker->output($this->linenb, false, $status, $data);
+                    continue;
+                } 
+            } else {
+                $status = get_string('statusbadgenotexist', 'block_badgeawarder');
+                $tracker->output($this->linenb, false, $status, $data);
+                continue;
+            }
+
             if ($user = $this->get_user($data)) {
                 if ($user->new) {
                     $accountscreated++;
@@ -216,29 +234,15 @@ class block_badgeawarder_processor {
             }
 
             // Award badge.
-            if ($badge = $this->get_badge($data['badge'])) {
-                if ($badge->type != 2) {
-                    $status = get_string('statuscoursebadgeonly', 'block_badgeawarder');
-                    $tracker->output($this->linenb, false, $status, $data);
-                    continue;
-                } else if (!$this->check_badge_criteria($badge)) {
-                    $status = get_string('statusbadgecriteriaerror', 'block_badgeawarder');
-                    $tracker->output($this->linenb, false, $status, $data);
-                    continue;
-                } else if ($badge->is_issued($user->id)) {
-                    $status = get_string('statusbadgealreadyawarded', 'block_badgeawarder');
-                    $tracker->output($this->linenb, false, $status, $data);
-                    continue;
-                } else if ($badge->is_active()) {
-                    $badge->issue($user->id, true);
-                    $awardtotal++;
-                } else {
-                    $status = get_string('statusbadgenotactive', 'block_badgeawarder');
-                    $tracker->output($this->linenb, false, $status, $data);
-                    continue;
-                }
+            if ($badge->is_issued($user->id)) {
+                $status = get_string('statusbadgealreadyawarded', 'block_badgeawarder');
+                $tracker->output($this->linenb, false, $status, $data);
+                continue;
+            } else if ($badge->is_active()) {
+                $badge->issue($user->id, true);
+                $awardtotal++;
             } else {
-                $status = get_string('statusbadgenotexist', 'block_badgeawarder');
+                $status = get_string('statusbadgenotactive', 'block_badgeawarder');
                 $tracker->output($this->linenb, false, $status, $data);
                 continue;
             }
@@ -272,7 +276,7 @@ class block_badgeawarder_processor {
         }
         if (isset($this->badges[$name])) {
             return $this->badges[$name];
-        } else if ($badge = $DB->get_record('badge', array('name' => $name))) {
+        } else if ($badge = $DB->get_record('badge', array('name' => $name, 'courseid' => $this->courseid))) {
             $newbadge = new badge($badge->id);
             $this->badges[$name] = $newbadge;
             return $this->badges[$name];
