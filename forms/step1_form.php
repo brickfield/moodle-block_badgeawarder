@@ -86,7 +86,7 @@ class block_badgeawarder_step1_form extends moodleform {
             $choices = array(
             block_badgeawarder_processor::MODE_CREATE_NEW => get_string('awardnew', 'block_badgeawarder'),
             block_badgeawarder_processor::MODE_CREATE_ALL => get_string('awardall', 'block_badgeawarder'),
-            block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder')
+            block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder'));
 
             $mform->addElement('select', 'mode', get_string('mode', 'block_badgeawarder'), $choices);
             if (!empty($config->defaultuploadtype)) {
