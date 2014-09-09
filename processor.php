@@ -377,7 +377,7 @@ class block_badgeawarder_processor {
     private function send_email($user) {
         global $CFG;
         $user->siteurl = $CFG->wwwroot;
-        $supportuser = core_user::get_support_user();
+        $supportuser = generate_email_supportuser();
 
         $emailawardsubject = get_string('emailawardsubject', 'block_badgeawarder');
         if ($user->new) {

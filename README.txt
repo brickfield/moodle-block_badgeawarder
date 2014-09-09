@@ -6,7 +6,7 @@ License: GPL v3
 Author: Learning Technology Services, www.lts.ie 
 Lead Developer: Bas Brands 
 
-Moodle versions: 2.5, 2.6
+Moodle versions: 2.5
 
 Github URL - https://github.com/learningtechnologyservices/moodle-block_badgeawarder 
 
@@ -16,7 +16,7 @@ INTRODUCTION
 
 This block has been created to enable quick and simple awarding of pre-existing badges in a given course. Both existing students and non-students can be awarded badges using this block. In the case of non-students, their details are used to generate new student accounts, they are then enrolled on the relevant course and are emailed their Moodle login details.
 
-It allows a teacher to upload a CSV file and processes the file based on the specified columns, and these field values must also be included in the CSV file's first line. The badge information required is the course badge name, viewable under Course badges.
+It allows a teacher to upload a CSV file and processes the file based on the specified columns, and these field values must also be included in the CSV file's first line to indicate their ordering. The badge information required is the course badge name, viewable under Course badges.
 
 CSV file format
 firstname,lastname,email,badge
@@ -33,6 +33,12 @@ USAGE
 Install the block in the /blocks/ folder 
 Ensure the plugin folder is called "badgeawarder" 
 Navigate to Site Administration -> Notifications to start installation 
+There are a number of global settings for this block:
+1) Show extended Options, defaults to No
+2) Upload type, defaults to Award to all users, create non-existing users
+3) Delimiter, defaults to ,
+4) Encoding, defaults to UTF-8
+5) Number of preview rows, defaults to 100
 
 How to use Badge Awarder in a course? 
 ----------------------------------------- 
@@ -44,7 +50,9 @@ Turn editing on and add the Badge Awarder block within the new course.
 
 You will then see the Badge Awarder block with its link, "Upload Badges CSV". Once clicked, this will bring you to the Badge CSV upload page. 
 
-The Badge CSV upload page uses the File Picker for you to select the relevant CSV file to upload, and also allows you to select the delimiter, encoding and number of rows to show on the Preview screen.
+The Badge CSV upload page uses the File Picker for you to select the relevant CSV file to upload.
+
+If you have configured the Show extended Options setting to Yes the page also allows you to select the delimiter, encoding and number of rows to show on the Preview screen.
 
 There are also three Import modes: 
 1) Award to new users only - this will parse the CSV file and only process those users which do not already exist on the Moodle site 
