@@ -18,13 +18,13 @@
  * Version details
  *
  * @package    block_badgeawarder
- * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
+ * @copyright  2015 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014090801;
+$plugin->version   = 2015022001;
 $plugin->requires  = 2013050100;
 $plugin->release = '1.2 (Build: 2014090800)';
 $plugin->maturity = MATURITY_STABLE;

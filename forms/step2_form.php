@@ -53,23 +53,12 @@ class block_badgeawarder_step2_form extends moodleform {
 
             $mform->addElement('select', 'country', get_string('country'), $countries);
             $mform->setType('country', PARAM_TEXT);
-            $mform->addRule('country', get_string('countryrequired', 'block_badgeawarder'), 'required', null, 'client');
 
             $mform->addElement('text', 'city', get_string('city'));
             $mform->setType('city', PARAM_TEXT);
             $mform->disabledIf('city', 'mode', 'eq', 3);
-            $mform->addRule('city', get_string('cityrequired', 'block_badgeawarder'), 'required', null, 'client');
         }
 
         $this->add_action_buttons(true, get_string('awardbadges', 'block_badgeawarder'));
-    }
-
-    public function validation($data, $files) {
-        global $CFG, $DB, $user;
-        $errors = parent::validation($data, $files);
-        if (isset($data['mode']) && $data['mode'] != 3 && $data['country'] == '0') {
-            $errors['country'] = get_string('countryrequired', 'block_badgeawarder');
-        }
-        return $errors;
     }
 }

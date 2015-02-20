@@ -65,7 +65,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add($select);
 
-    $choices = textlib::get_encodings();
+    $choices = core_text::get_encodings();
 
     $select = new admin_setting_configselect(
         'block_badgeawarder/defaultencoding',

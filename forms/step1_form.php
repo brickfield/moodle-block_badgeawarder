@@ -74,7 +74,7 @@ class block_badgeawarder_step1_form extends moodleform {
                 $mform->setDefault('delimiter_name', 'comma');
             }
 
-            $choices = textlib::get_encodings();
+            $choices = core_text::get_encodings();
             $mform->addElement('select', 'encoding', get_string('encoding', 'block_badgeawarder'), $choices);
 
             if (!empty($config->defaultencoding)) {
