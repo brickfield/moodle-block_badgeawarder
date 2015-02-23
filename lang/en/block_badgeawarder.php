@@ -57,8 +57,6 @@ To access Moodle, got to: {$a->siteurl}
 Your current login information is now:<br>
    username: {$a->username}<br>
    password: {$a->newpassword}<br>
-<br>
-you will have to change your password when you login for the first time.<br>
 ';
 $string['emailawardtextexisting'] = 'Congratulations you have received a {$a->badgename} badge.<br>
 <br>
