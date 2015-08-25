@@ -144,6 +144,8 @@ class block_badgeawarder_processor {
      * @return void
      */
     public function execute($tracker = null) {
+        global $USER;
+
         if ($this->processstarted) {
             throw new coding_exception('Process has already been started');
         }
@@ -168,6 +170,10 @@ class block_badgeawarder_processor {
 
         $existingemails = $this->get_existing_useremailaddresses();
         $existingusernames = $this->get_existing_usernames();
+
+        // Include uploading user institution and department data.
+        $this->institution = $USER->institution;
+        $this->department = $USER->department;
 
         // Loop over the CSV lines.
         while ($line = $this->cir->next()) {
@@ -339,6 +345,8 @@ class block_badgeawarder_processor {
             $user->city = $this->defaultcity;
             $user->country = $this->defaultcountry;
             $user->mnethostid   = $CFG->mnet_localhost_id;
+            $user->institution = $this->institution;
+            $user->department = $this->department;
             $user->auth = 'manual';
             $user->policyagreed = 1;
             $user->picture = 0;
