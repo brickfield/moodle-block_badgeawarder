@@ -6,7 +6,7 @@ License: GPL v3
 Author: Learning Technology Services, www.lts.ie 
 Lead Developer: Bas Brands 
 
-Moodle versions: 2.5, 2.6, 2.7, 2.8, 3.0, 3.1
+Moodle versions: 2.5, 2.6, 2.7, 2.8, 3.0, 3.1, 3.2
 
 Github URL - https://github.com/learningtechnologyservices/moodle-block_badgeawarder 
 

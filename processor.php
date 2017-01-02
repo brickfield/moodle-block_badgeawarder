@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/csvlib.class.php');
-
+require_once($CFG->dirroot .'/badges/lib/awardlib.php');
 
 class block_badgeawarder_processor {
 
@@ -144,7 +144,7 @@ class block_badgeawarder_processor {
      * @return void
      */
     public function execute($tracker = null) {
-        global $USER;
+        global $DB, $USER;
 
         if ($this->processstarted) {
             throw new coding_exception('Process has already been started');
@@ -246,6 +246,8 @@ class block_badgeawarder_processor {
                 continue;
             } else if ($badge->is_active()) {
                 $badge->issue($user->id, true);
+                $teacher = $DB->get_record('role', array('archetype'=>'teacher'));
+                process_manual_award($user->id, $USER->id, $teacher->id, $badge->id);
                 $awardtotal++;
             } else {
                 $status = get_string('statusbadgenotactive', 'block_badgeawarder');
