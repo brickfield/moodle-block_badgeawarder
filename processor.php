@@ -110,7 +110,7 @@ class block_badgeawarder_processor {
     public function __construct(csv_import_reader $cir, $options) {
         if (is_array($options)) {
             $arrayoptions = $options;
-            $options = new Object();
+            $options = new stdClass();
             foreach ($arrayoptions as $key => $value) {
                 $options->$key = $value;
             }
@@ -326,7 +326,7 @@ class block_badgeawarder_processor {
         }
 
         if ($this->mode == self::MODE_CREATE_NEW || $this->mode == self::MODE_CREATE_ALL) {
-            $user = new Object();
+            $user = new stdClass();
             $user->username = $data['email'];
             $user->email = $data['email'];
             $user->firstname = $data['firstname'];
