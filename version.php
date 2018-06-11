@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017010200;
-$plugin->requires  = 2013050100;
-$plugin->release = '1.2 (Build: 2014090800)';
+$plugin->version   = 2018061100;
+$plugin->requires  = 2018051700;
+$plugin->release = '3.5 (Build: 2018051700)';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->component = 'block_badgeawarder';

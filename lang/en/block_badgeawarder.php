@@ -78,6 +78,7 @@ $string['previewskipexisting'] = 'Skipping Existing user';
 $string['previewupdateexisting'] = 'Updating Existing user';
 $string['previewskipnonexisting'] = 'Skipping Non Existing user';
 $string['previewcreatenew'] = 'Creating new user';
+$string['privacy:metadata'] = 'The Block Badgeawarder plugin does not store any personal data. However it does use the standard Moodle APIs to create new user accounts, enrol them into specific courses and award them specific badges based on a CSV upload of fields: firstname,lastname,email,badge.';
 $string['result'] = 'Result';
 $string['returntocourse'] = 'Return to course';
 $string['rowpreviewnum'] = 'Preview rows';
