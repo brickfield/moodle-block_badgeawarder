@@ -146,6 +146,8 @@ class block_badgeawarder_processor {
     public function execute($tracker = null) {
         global $DB, $USER;
 
+        $config = get_config('block_badgeawarder');
+
         if ($this->processstarted) {
             throw new coding_exception('Process has already been started');
         }
@@ -165,8 +167,10 @@ class block_badgeawarder_processor {
         @set_time_limit(0);
         raise_memory_limit(MEMORY_EXTRA);
 
-        $enrolments = $this->get_enrolments();
-        $this->get_enrolmentinstance();
+        if ($this->courseid != SITEID) {
+            $enrolments = $this->get_enrolments();
+            $this->get_enrolmentinstance();
+        }
 
         $existingemails = $this->get_existing_useremailaddresses();
         $existingusernames = $this->get_existing_usernames();
@@ -209,9 +213,12 @@ class block_badgeawarder_processor {
             // Check badge.
             if ($badge = $this->get_badge($data['badge'])) {
                 if ($badge->type != 2) {
-                    $status = get_string('statuscoursebadgeonly', 'block_badgeawarder');
-                    $tracker->output($this->linenb, false, $status, $data);
-                    continue;
+                    // For Site badges, check if enabled.
+                    if ($config->enablesitebadges != 1) {
+                        $status = get_string('statuscoursebadgeonly', 'block_badgeawarder');
+                        $tracker->output($this->linenb, false, $status, $data);
+                        continue;
+                    }
                 } else if (!$this->check_badge_criteria($badge)) {
                     $status = get_string('statusbadgecriteriaerror', 'block_badgeawarder');
                     $tracker->output($this->linenb, false, $status, $data);
@@ -233,10 +240,12 @@ class block_badgeawarder_processor {
                 continue;
             }
 
-            // Check enrolment and enrol if needed.
-            if (!array_key_exists($user->id, $enrolments)) {
-                $this->enrol_user($user);
-                $usersenrolled++;
+            if ($this->courseid != SITEID) {
+                // Check enrolment and enrol if needed.
+                if (!array_key_exists($user->id, $enrolments)) {
+                    $this->enrol_user($user);
+                    $usersenrolled++;
+                }
             }
 
             // Award badge.
@@ -282,9 +291,15 @@ class block_badgeawarder_processor {
         if (empty($name)) {
             return false;
         }
+
+        $courseid = $this->courseid;
+        if ($courseid == SITEID) {
+            $courseid = null;
+        }
+
         if (isset($this->badges[$name])) {
             return $this->badges[$name];
-        } else if ($badge = $DB->get_record('badge', array('name' => $name, 'courseid' => $this->courseid))) {
+        } else if ($badge = $DB->get_record('badge', array('name' => $name, 'courseid' => $courseid))) {
             $newbadge = new badge($badge->id);
             $this->badges[$name] = $newbadge;
             return $this->badges[$name];
@@ -493,7 +508,9 @@ class block_badgeawarder_processor {
      * @return array of preview data.
      */
     public function preview($rows = 10) {
-        global $DB;
+        global $CFG, $DB;
+
+        $config = get_config('block_badgeawarder');
 
         $choices = array(
         self::MODE_CREATE_NEW => get_string('awardnew', 'block_badgeawarder'),
@@ -536,13 +553,16 @@ class block_badgeawarder_processor {
 
             if (!$badge = $this->get_badge($data['badge'])) {
                 $result = false;
-                $status[] = get_string('statusbadgenotexist', 'block_badgeawarder');
+                $status[] = get_string('statusbadgenotexist1', 'block_badgeawarder');
             } else if (!$badge->is_active()) {
                 $result = false;
                 $status[] = get_string('statusbadgenotactive', 'block_badgeawarder');
             } else if ($badge->type != 2) {
-                $result = false;
-                $status[] = get_string('statuscoursebadgeonly', 'block_badgeawarder');
+                // For Site badges, check if enabled.
+                if ($config->enablesitebadges != 1) {
+                    $result = false;
+                    $status[] = get_string('statuscoursebadgeonly1', 'block_badgeawarder');
+                }
             } else if (!$this->check_badge_criteria($badge)) {
                 $result = false;
                 $status[] = get_string('statusbadgecriteriaerror', 'block_badgeawarder');

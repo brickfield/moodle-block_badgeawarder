@@ -88,4 +88,14 @@ if ($ADMIN->fulltree) {
     );
     
     $settings->add($select);
+
+    $checkbox = new admin_setting_configcheckbox(
+        'block_badgeawarder/enablesitebadges',
+        get_string('enablesitebadges', 'block_badgeawarder'),
+        '',
+        0,
+        1,
+        0
+    );
+    $settings->add($checkbox);
 }

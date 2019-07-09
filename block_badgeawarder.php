@@ -29,7 +29,15 @@ class block_badgeawarder extends block_base {
     }
 
     public function applicable_formats() {
-        return array('course' => true);
+        global $CFG;
+
+        $config = get_config('block_badgeawarder');
+
+        $formats = array('course' => true);
+        if ($config->enablesitebadges == 1) {
+            $formats['my'] = true;
+        }
+        return $formats;
     }
 
     public function specialization() {
@@ -66,6 +74,11 @@ class block_badgeawarder extends block_base {
         }
 
         $context = context_course::instance($this->page->course->id);
+
+        $courseid = $this->page->course->id;
+        if ($courseid == SITEID) {
+            $courseid = null;
+        }
 
         if (has_capability('block/badgeawarder:uploadcsv', $context)) {
             $linkurl = new moodle_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $this->page->course->id));

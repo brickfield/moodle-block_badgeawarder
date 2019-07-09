@@ -62,6 +62,7 @@ $string['emailawardtextexisting'] = 'Congratulations you have received a {$a->ba
 <br>
 To access your badge visit {$a->siteurl}
 ';
+$string['enablesitebadges'] = 'Enable site badge awarding';
 $string['encoding'] = 'Encoding';
 $string['enrolment'] = 'Enrolment';
 $string['emailsend'] = 'Email send';
@@ -91,6 +92,7 @@ $string['statusgetuserfailed'] = 'Creating or getting user failed';
 $string['statusbadgealreadyawarded'] = 'Badge already awarded';
 $string['statusbadgenotactive'] = 'Badge not active';
 $string['statusbadgenotexist'] = 'Badge does not exist';
+$string['statusbadgenotexist1'] = 'Badge does not exist here either!';
 $string['statusemailinvited'] = 'Emailed new user';
 $string['statusemailnotified'] = 'Existing user notified';
 $string['statusemailfailed'] = 'Could not send email';
@@ -99,6 +101,7 @@ $string['statusskipnewuser'] = 'Skipping new user';
 $string['statusskipexistinguser'] = 'Skipping existing user';
 $string['statusmissingfields'] = 'Missing required fields';
 $string['statuscoursebadgeonly'] = 'Not a course badge';
+$string['statuscoursebadgeonly1'] = 'Not a course badge at all!';
 $string['statusbadgecriteriaerror'] = 'Badge not manually awarded or has additional criteria';
 $string['uploadbadgespreview'] = 'Upload Badges Preview';
 $string['uploadcsv'] = 'Upload CSV';
