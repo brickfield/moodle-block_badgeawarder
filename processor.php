@@ -301,11 +301,11 @@ class block_badgeawarder_processor {
 
         foreach ($badge->criteria as $type => $criteria) {
             // Role completion.
-            if ($type != 2 && count($criteria->params) > 0) {
+            if ($type != 2 && $criteria->params && count($criteria->params) > 0) {
                 return false;
             }
             // Manual completion.
-            if ($type == 2 && count($criteria->params) > 0) {
+            if ($type == 2 && $criteria->params && count($criteria->params) > 0) {
                 $manualactive = true;
             }
         }
