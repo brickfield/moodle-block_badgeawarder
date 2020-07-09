@@ -85,7 +85,7 @@ $string['rowpreviewnum'] = 'Preview rows';
 $string['rowpreviewnum_help'] = 'Number of rows from the CSV file that will be previewed in the next page. This option exists in
 order to limit the next page size.';
 $string['samplecsv'] = 'Download a sample csv file';
-$string['showextendedoption'] = 'Show Extended Options';
+$string['showextendedoption'] = 'Show extended options';
 $string['statusok'] = 'Ok';
 $string['statusgetuserfailed'] = 'Creating or getting user failed';
 $string['statusbadgealreadyawarded'] = 'Badge already awarded';
