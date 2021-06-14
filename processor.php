@@ -329,7 +329,7 @@ class block_badgeawarder_processor {
 
         if ($this->mode == self::MODE_CREATE_NEW || $this->mode == self::MODE_CREATE_ALL) {
             $user = new stdClass();
-            $user->username = $data['email'];
+            $user->username = strtolower($data['email']);
             $user->email = $data['email'];
             $user->firstname = $data['firstname'];
             $user->lastname = $data['lastname'];
