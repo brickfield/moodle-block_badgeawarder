@@ -125,7 +125,11 @@ class block_badgeawarder_processor {
             $this->defaultcity = $options->city;
         }
         if (isset($options->country)) {
-            $this->defaultcountry = $options->country;
+            if ($this->defaultcountry === '0') {
+                $this->defaultcountry = '';
+            } else {
+                $this->defaultcountry = $options->country;
+            }
         }
 
         $this->mode = $options->mode;
