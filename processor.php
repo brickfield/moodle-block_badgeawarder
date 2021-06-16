@@ -198,6 +198,18 @@ class block_badgeawarder_processor {
                     $tracker->output($this->linenb, false, $status, $data);
                     continue;
                 }
+                if (empty($data['firstname'])) {
+                    $result = false;
+                    $status = get_string('statusskipinvalidfirstname', 'block_badgeawarder');
+                    $tracker->output($this->linenb, false, $status, $data);
+                    continue;
+                }
+                if (empty($data['lastname'])) {
+                    $result = false;
+                    $status = get_string('statusskipinvalidlastname', 'block_badgeawarder');
+                    $tracker->output($this->linenb, false, $status, $data);
+                    continue;
+                }
                 if ($this->mode == self::MODE_UPDATE_ONLY) {
                     $result = false;
                     $status = get_string('statusskipnewuser', 'block_badgeawarder');
@@ -561,6 +573,14 @@ class block_badgeawarder_processor {
                 if (!validate_email($data['email'])) {
                     $result = false;
                     $status[] = get_string('statusskipinvalidemail', 'block_badgeawarder');
+                }
+                if (empty($data['firstname'])) {
+                    $result = false;
+                    $status[] = get_string('statusskipinvalidfirstname', 'block_badgeawarder');
+                }
+                if (empty($data['lastname'])) {
+                    $result = false;
+                    $status[] = get_string('statusskipinvalidlastname', 'block_badgeawarder');
                 }
             }
             if ($result) {
