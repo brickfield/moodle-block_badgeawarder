@@ -41,9 +41,10 @@ $string['completion'] = 'Completion';
 $string['selectcountry'] = 'Select Default Country';
 $string['csv'] = 'The badge CSV file';
 $string['csvdelimiter'] = 'CSV delimiter';
+$string['csvdelimitererror'] = 'Incorrect field delimiter detected.';
 $string['csvfileerror'] = 'There was an error in your CSV upload file';
 $string['csvformaterror'] = '<br>The CSV manager failed to find all required fields, The BadgeAwarder requires
-the fields firstname, lastname, badge, email on the first row.<br>If you receive this message either one of these fields were missing or you have not chosen the correct field delimiter.';
+the fields firstname, lastname, badge, email on the first row.<br>If you receive this message one of these fields were missing.';
 $string['csvline'] = 'CSV line';
 $string['defaultuploadtype'] = 'Default upload type';
 $string['defaultdelimiter'] = 'Default delimiter';
