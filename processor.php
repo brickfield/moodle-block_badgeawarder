@@ -600,6 +600,20 @@ class block_badgeawarder_processor {
     protected function validate() {
         global $COURSE;
         foreach ($this->filecolumns as $requiredcolumn) {
+
+            foreach ($this->columns as $test) {
+                // Checks that the columns do not still contain delimiters.
+                // If they still contain delimiters this means the wrong delimiter was used.
+                $delimiters = array(',', ';', ':', '\t');
+                foreach ($delimiters as $delimiter) {
+                    if (strpos($test, $delimiter)){
+                        $returnlink = new moodle_url('/course/view.php', array('id' => $COURSE->id));
+                        throw new moodle_exception('csvloaderror', 'error',
+                            $returnlink, get_string('csvdelimitererror', 'block_badgeawarder'), '');
+                    }
+                }
+            }
+
             if (!in_array($requiredcolumn, $this->columns)) {
                 $returnlink = new moodle_url('/course/view.php', array('id' => $COURSE->id));
                 throw new moodle_exception('csvloaderror', 'error',
