@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_badgeawarder';
-$plugin->version   = 2019070900;
+$plugin->release = '1.401.01';
+$plugin->version = 2023041701;
 $plugin->requires  = 2022112800; // Moodle 4.1 and higher.
-$plugin->release = '3.5 (Build: 2018051700)';
 $plugin->maturity = MATURITY_STABLE;
