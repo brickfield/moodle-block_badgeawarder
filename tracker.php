@@ -14,6 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->libdir . '/weblib.php');
+
 /**
  * File containing processor class.
  *
@@ -21,10 +25,6 @@
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-require_once($CFG->libdir . '/weblib.php');
-
 class block_badgeawarder_tracker {
 
 
@@ -50,8 +50,6 @@ class block_badgeawarder_tracker {
 
     /**
      * Constructor.
-     *
-     * @param int $outputmode desired output mode.
      */
     public function __construct() {
     }
@@ -68,10 +66,9 @@ class block_badgeawarder_tracker {
     /**
      * Output the results.
      *
-     * @param int $total total courses.
-     * @param int $created count of courses created.
-     * @param int $updated count of courses updated.
-     * @param int $deleted count of courses deleted.
+     * @param int $awardtotal total courses.
+     * @param int $accountscreated count of courses created.
+     * @param int $usersenrolled count of users enrolled.
      * @param int $errors count of errors.
      * @return void
      */

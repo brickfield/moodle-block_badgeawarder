@@ -21,29 +21,54 @@
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class block_badgeawarder extends block_base {
 
+    /**
+     * Ininitalizes the object.
+     */
     public function init() {
         $this->title = get_string('blockname', 'block_badgeawarder');
     }
 
+    /**
+     * Returns an array of applicable formats.
+     *
+     * @return array
+     */
     public function applicable_formats() {
         return array('course' => true);
     }
 
+    /**
+     * Sets the title value.
+     */
     public function specialization() {
         $this->title = get_string('blockname', 'block_badgeawarder');
     }
 
+    /**
+     * Returns true.
+     *
+     * @return true
+     */
     public function has_config() {
         return true;
     }
 
+    /**
+     * Returns false.
+     *
+     * @return bool
+     */
     public function instance_allow_multiple() {
         return false;
     }
 
+    /**
+     * Retrieves the block content.
+     *
+     * @return object
+     */
     public function get_content() {
         global $CFG;
 

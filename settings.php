@@ -74,7 +74,7 @@ if ($ADMIN->fulltree) {
         'UTF-8',
         $choices
     );
-    
+
     $settings->add($select);
 
     $choices = array('10' => 10, '20' => 20, '100' => 100, '1000' => 1000, '100000' => 100000);
@@ -86,6 +86,6 @@ if ($ADMIN->fulltree) {
         '100',
         $choices
     );
-    
+
     $settings->add($select);
 }

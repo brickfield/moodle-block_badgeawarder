@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Contains the set up functions.
  *
  * @package    block_badgeawarder
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
@@ -23,6 +24,9 @@
 
 /**
  * Create process forms page header
+ *
+ * @param object $course the course object.
+ * @param object $context the context.
  */
 function block_badgeawarder_page_header($course, $context) {
     global $PAGE;

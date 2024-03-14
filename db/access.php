@@ -35,14 +35,6 @@ $capabilities = array(
         ),
     ),
 
-    'block/badgeawarder:myaddinstance' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
-            'manager' => CAP_ALLOW
-        ),
-    ),
-
     'block/badgeawarder:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
