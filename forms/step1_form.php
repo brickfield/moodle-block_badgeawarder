@@ -33,7 +33,6 @@ require_once("$CFG->libdir/formslib.php");
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class block_badgeawarder_step1_form extends moodleform {
 
     /**
@@ -63,7 +62,7 @@ class block_badgeawarder_step1_form extends moodleform {
         if (!empty($config->showextendedoption) && ($config->showextendedoption == 1)) {
             $choices = csv_import_reader::get_delimiter_list();
             $mform->addElement('select', 'delimiter_name', get_string('csvdelimiter', 'block_badgeawarder'), $choices);
-            
+
             if (!empty($config->defaultdelimiter)) {
                 $mform->setDefault('delimiter_name', $config->defaultdelimiter);
             } else if (array_key_exists('cfg', $choices)) {
@@ -93,7 +92,6 @@ class block_badgeawarder_step1_form extends moodleform {
                 $mform->setDefault('previewrows', '100');
             }
 
-        
             $mform->addElement('header', 'importoptionshdr', get_string('importoptions', 'block_badgeawarder'));
             $mform->setExpanded('importoptionshdr', true);
 

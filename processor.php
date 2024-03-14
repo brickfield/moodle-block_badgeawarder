@@ -14,6 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->libdir . '/csvlib.class.php');
+require_once($CFG->dirroot .'/badges/lib/awardlib.php');
+
 /**
  * File containing processor class.
  *
@@ -21,11 +26,6 @@
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-require_once($CFG->libdir . '/csvlib.class.php');
-require_once($CFG->dirroot .'/badges/lib/awardlib.php');
-
 class block_badgeawarder_processor {
 
     /**
@@ -49,7 +49,7 @@ class block_badgeawarder_processor {
     const UPDATE_NOTHING = 0;
 
     /**
-     * @bool true if there is really nothing to do.
+     * @var bool true if there is really nothing to do.
      */
     public $nothingtodo;
 
@@ -105,7 +105,6 @@ class block_badgeawarder_processor {
      *
      * @param csv_import_reader $cir import reader object
      * @param array $options options of the process
-     * @param array $defaults default data value
      */
     public function __construct(csv_import_reader $cir, $options) {
         if (is_array($options)) {
@@ -246,7 +245,7 @@ class block_badgeawarder_processor {
                 continue;
             } else if ($badge->is_active()) {
                 $badge->issue($user->id, true);
-                $teacher = $DB->get_record('role', array('archetype'=>'teacher'));
+                $teacher = $DB->get_record('role', array('archetype' => 'teacher'));
                 process_manual_award($user->id, $USER->id, $teacher->id, $badge->id);
                 $awardtotal++;
             } else {
@@ -277,6 +276,12 @@ class block_badgeawarder_processor {
         $tracker->results($awardtotal, $accountscreated, $usersenrolled, $errors);
     }
 
+    /**
+     * Returns a badge object from a name.
+     *
+     * @param string $name the name of the badge.
+     * @return object|bool
+     */
     private function get_badge($name) {
         global $DB;
         if (empty($name)) {
@@ -293,6 +298,12 @@ class block_badgeawarder_processor {
         }
     }
 
+    /**
+     * Checks the criteria of a badge.
+     *
+     * @param badge $badge the badge object.
+     * @return bool
+     */
     private function check_badge_criteria(badge $badge) {
         // Completion types: 0 -> overall, 1 -> activity, 2 -> manual.
         // 3 -> social, 4 -> course, 5 -> courseset, 6 -> profile.
@@ -316,6 +327,12 @@ class block_badgeawarder_processor {
         }
     }
 
+    /**
+     * Returns or creates a user depending on the mode.
+     *
+     * @param array $data
+     * @return object|bool
+     */
     private function get_user($data) {
         global $CFG, $DB;
         if ($existinguser = $DB->get_record('user', array('email' => $data['email']))) {
@@ -369,11 +386,21 @@ class block_badgeawarder_processor {
         }
     }
 
+    /**
+     * Retrieves all enrollments for the current course
+     *
+     * @return array
+     */
     private function get_enrolments() {
         $context = context_course::instance($this->courseid);
         return get_enrolled_users($context);
     }
 
+    /**
+     * Retrieves an enrolment instance for the current course.
+     *
+     * @return object
+     */
     private function get_enrolmentinstance() {
         global $DB;
         if (enrol_is_enabled('manual')) {
@@ -384,6 +411,12 @@ class block_badgeawarder_processor {
         $this->enrolinstance = $DB->get_record('enrol', array('courseid' => $this->courseid, 'enrol' => 'manual'), '*', MUST_EXIST);
     }
 
+    /**
+     * Sends an email to the user with the awarded badge details.
+     *
+     * @param object $user
+     * @return bool
+     */
     private function send_email($user) {
         global $CFG;
         $user->siteurl = $CFG->wwwroot;
@@ -402,6 +435,12 @@ class block_badgeawarder_processor {
     }
 
 
+    /**
+     * Enrols a user in a course.
+     *
+     * @param object $user
+     * @return void
+     */
     private function enrol_user($user) {
         $this->manualenrolment->enrol_user($this->enrolinstance, $user->id, 5);
     }
@@ -456,18 +495,34 @@ class block_badgeawarder_processor {
         return $data;
     }
 
+    /**
+     * Retrieves an array of all unique user email addresses.
+     *
+     * @return array
+     */
     protected function get_existing_useremailaddresses() {
         global $DB;
         $sql = "SELECT DISTINCT(email) FROM {user} where DELETED = 0 ORDER BY email";
         return (array) $DB->get_records_sql($sql);
     }
 
+    /**
+     * Retrieves an array of all unique usernames.
+     *
+     * @return array
+     */
     protected function get_existing_usernames() {
         global $DB;
         $sql = "SELECT DISTINCT(username) FROM {user} where DELETED = 0 ORDER BY username";
         return (array) $DB->get_records_sql($sql);
     }
 
+    /**
+     * Verifies that filecolumns has all the required fields.
+     *
+     * @param array $data
+     * @return bool
+     */
     protected function check_required_fields($data) {
         $checkedfields = 0;
 
@@ -489,7 +544,6 @@ class block_badgeawarder_processor {
      * This only returns passed data, along with the errors.
      *
      * @param integer $rows number of rows to preview.
-     * @param object $tracker the output tracker to use.
      * @return array of preview data.
      */
     public function preview($rows = 10) {
