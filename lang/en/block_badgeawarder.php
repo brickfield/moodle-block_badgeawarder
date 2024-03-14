@@ -32,7 +32,6 @@ $string['awardresult'] = 'Result';
 $string['awardtotal'] = 'Total awarded: {$a}';
 $string['badge'] = 'Badge';
 $string['badgeawarder:addinstance'] = 'Add a Badge Awarder block';
-$string['badgeawarder:myaddinstance'] = 'Add a Badge Awarder block';
 $string['badgeawarder:uploadcsv'] = 'Upload a CSV file to the Badge Awarder block';
 $string['badgecsv'] = 'Badge csv upload';
 $string['badgecsvpreview'] = 'Preview the badge awarding about to be done';
