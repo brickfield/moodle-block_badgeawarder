@@ -47,12 +47,12 @@ The Badge CSV upload page uses the File Picker for you to select the relevant CS
 This also allows you to select the delimiter, encoding and number of rows to show on the Preview screen.
 
 There are also three Import modes:  
-1) Award to new users only - this will parse the CSV file and only process those users which do not 
+1. Award to new users only - this will parse the CSV file and only process those users which do not 
 already exist on the Moodle site.  
-2) Award to all users, create non-existing users - this will parse the CSV file and process all rows.  
+2. Award to all users, create non-existing users - this will parse the CSV file and process all rows.  
 All existing users will be enrolled on the course and awarded their badge.  
 All non-existing users will be enrolled, have their login details mailed to their email account, and then also be enrolled on the course and awarded their badge.  
-3) Award to existing users only - this will parse the CSV file and only process those users which do already exist on the Moodle site.
+3. Award to existing users only - this will parse the CSV file and only process those users which do already exist on the Moodle site.
 
 Click on the Preview button to submit the CSV file and view the pending user details before they are finally submitted, to review in case any changes are needed.
 
