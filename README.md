@@ -4,13 +4,13 @@ Copyright (C) 2025 [Brickfield Education Labs](https://www.brickfield.ie)
 ## What is Badge CSV Awarder?
 Save time and effort awarding multiple course badges to your students, by using one CSV file upload instead.
 
-You also have an optional feature to create users using their details, if enabled in the configuration, and to enrol them onto the badge’s course.
+You also have an optional feature to create users using their details, if enabled in the configuration, and to enrol them onto the badge's course.
 
 ## License
 2025 Onward [Brickfield Education Labs](https://www.brickfield.ie)
 
 ## Version support
-This plugin has been developed to work on Moodle releases 4.01, 4.04, and 4.05.
+This plugin has been developed to work on Moodle releases 4.1, 4.4, and 4.5.
 
 ## Funding credits
 Initial funding for this plugin was provided by the HSA.
@@ -40,29 +40,27 @@ Navigate to the course you wish to award the badges for.
 
 Turn editing on and add the Badge Awarder block within the new course.
 
-You will then see the Badge Awarder block with its link, "Upload Badges CSV". 
+You will then see the Badge Awarder block with its link, "Upload Badges CSV".  
 Once clicked, this will bring you to the Badge CSV upload page. 
 
-The Badge CSV upload page uses the File Picker for you to select the relevant CSV file to upload. 
+The Badge CSV upload page uses the File Picker for you to select the relevant CSV file to upload.  
 This also allows you to select the delimiter, encoding and number of rows to show on the Preview screen.
 
-There are also three Import modes: 
+There are also three Import modes:  
 1) Award to new users only - this will parse the CSV file and only process those users which do not 
-already exist on the Moodle site 
-2) Award to all users, create non-existing users - this will parse the CSV file and process all rows. 
-All existing users will be enrolled on the course and awarded their badge. 
-All non-existing users will be enrolled, have their login details mailed to their email account, 
-and then also be enrolled on the course and awarded their badge. 
-3) Award to existing users only - this will parse the CSV file and only process those users which do already exist on the Moodle site
+already exist on the Moodle site.  
+2) Award to all users, create non-existing users - this will parse the CSV file and process all rows.  
+All existing users will be enrolled on the course and awarded their badge.  
+All non-existing users will be enrolled, have their login details mailed to their email account, and then also be enrolled on the course and awarded their badge.  
+3) Award to existing users only - this will parse the CSV file and only process those users which do already exist on the Moodle site.
 
-Click on the Preview button to submit the CSV file and view the pending user details before they are finally submitted, 
-to review in case any changes are needed.
+Click on the Preview button to submit the CSV file and view the pending user details before they are finally submitted, to review in case any changes are needed.
 
 On the Preview page, if you are processing new users, you will also need to select their Country and City for the submission process.
 
-Once satisfied with the preview details, click on the "Award badges" button and the CSV file will be fully processed. 
-Once completed, the page will display the results of the CSV file upload, including 
-1) Total [Badges] awarded 
-2) Number of accounts created 
-3) [Existing] Users Enrolled 
-4) Any award errors 
+Once satisfied with the preview details, click on the "Award badges" button and the CSV file will be fully processed.  
+Once completed, the page will display the results of the CSV file upload, including  
+1. Total Badges awarded.
+2. Number of accounts created.
+3. Existing Users Enrolled.
+4. Any award errors.
