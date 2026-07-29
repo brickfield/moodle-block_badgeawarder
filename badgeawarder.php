@@ -15,45 +15,46 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Upload a CSV file of badge recipients, preview the pending awards, and process them.
  *
  * @package    block_badgeawarder
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require(__DIR__ .'/../../config.php');
+
+require(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->libdir . '/csvlib.class.php');
 require_once($CFG->libdir . '/badgeslib.php');
-require_once($CFG->dirroot .'/blocks/badgeawarder/forms/step1_form.php');
-require_once($CFG->dirroot .'/blocks/badgeawarder/forms/step2_form.php');
-require_once($CFG->dirroot .'/blocks/badgeawarder/processor.php');
-require_once($CFG->dirroot .'/blocks/badgeawarder/tracker.php');
+require_once($CFG->dirroot . '/blocks/badgeawarder/forms/step1_form.php');
+require_once($CFG->dirroot . '/blocks/badgeawarder/forms/step2_form.php');
+require_once($CFG->dirroot . '/blocks/badgeawarder/processor.php');
+require_once($CFG->dirroot . '/blocks/badgeawarder/tracker.php');
 require_once('locallib.php');
 
 $courseid  = optional_param('courseid', 0, PARAM_INT);
 $importid = optional_param('importid', '', PARAM_INT);
-$mode = optional_param('mode', '', PARAM_INT);
+$mode = block_badgeawarder_resolve_mode(optional_param('mode', '', PARAM_INT));
 $previewrows = optional_param('previewrows', 10, PARAM_INT);
 
 if ($courseid == 0) {
     redirect(new moodle_url('/'));
 }
 
-$course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
 
 require_course_login($course);
 
 $context = context_course::instance($courseid);
 
 if (!has_capability('block/badgeawarder:uploadcsv', $context)) {
-    redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
+    redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
 }
 
-$returnurl = new moodle_url('/course/view.php', array('id' => $course->id));
+$returnurl = new moodle_url('/course/view.php', ['id' => $course->id]);
 
 if (empty($importid)) {
-    $mform1 = new block_badgeawarder_step1_form(null, array('courseid' => $course->id));
+    $mform1 = new block_badgeawarder_step1_form(null, ['courseid' => $course->id]);
     if ($form1data = $mform1->is_cancelled()) {
         if (!empty($cir)) {
             $cir->cleanup(true);
@@ -66,12 +67,12 @@ if (empty($importid)) {
         $readcount = $cir->load_csv_content($content, $form1data->encoding, $form1data->delimiter_name);
         unset($content);
         if ($readcount === false) {
-            print_error('csvfileerror', 'block_badgeawarder', $returnurl, $cir->get_error());
+            throw new moodle_exception('csvfileerror', 'block_badgeawarder', $returnurl, $cir->get_error());
         } else if ($readcount == 0) {
-            print_error('csvemptyfile', 'error', $returnurl, $cir->get_error());
+            throw new moodle_exception('csvemptyfile', 'error', $returnurl, $cir->get_error());
         }
     } else {
-        $PAGE->set_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $course->id));
+        $PAGE->set_url('/blocks/badgeawarder/badgeawarder.php', ['courseid' => $course->id]);
         $PAGE->set_context($context);
         $PAGE->set_title(get_string('badgecsv', 'block_badgeawarder'));
         $PAGE->set_heading(get_string('badgecsv', 'block_badgeawarder'));
@@ -80,13 +81,15 @@ if (empty($importid)) {
         $PAGE->navbar->add(get_string('uploadcsv', 'block_badgeawarder'), '', navigation_node::TYPE_CUSTOM);
 
         echo $OUTPUT->header(get_string('badgecsv', 'block_badgeawarder'));
-        $samplecsv = html_writer::link(new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'),
-            get_string('samplecsv', 'block_badgeawarder'));
+        $samplecsv = html_writer::link(
+            new moodle_url('/blocks/badgeawarder/badge_upload_sample.csv'),
+            get_string('samplecsv', 'block_badgeawarder')
+        );
         $icon = new help_icon('uploadbadgecsv', 'block_badgeawarder');
         echo $OUTPUT->heading(get_string('uploadbadgecsv', 'block_badgeawarder') . $OUTPUT->render($icon));
 
         $mform1->display();
-        echo $OUTPUT->single_button(new moodle_url('/course/view.php', array('id' => $course->id)), get_string('back'), '');
+        echo $OUTPUT->single_button(new moodle_url('/course/view.php', ['id' => $course->id]), get_string('back'), '');
         echo $OUTPUT->footer();
         die;
     }
@@ -95,22 +98,23 @@ if (empty($importid)) {
 }
 // Data to set in the form.
 
-$data = array('importid' => $importid, 'courseid' => $course->id);
+$data = ['importid' => $importid, 'courseid' => $course->id];
 if (!empty($form1data)) {
-    $data['mode'] = $form1data->mode;
+    $data['mode'] = block_badgeawarder_resolve_mode($form1data->mode);
 } else {
     $data['mode'] = $mode;
 }
 
-$mform2 = new block_badgeawarder_step2_form(null, array('data' => $data));
+$mform2 = new block_badgeawarder_step2_form(null, ['data' => $data]);
 
-$returnurl2 = new moodle_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $course->id));
+$returnurl2 = new moodle_url('/blocks/badgeawarder/badgeawarder.php', ['courseid' => $course->id]);
 
 // If a file has been uploaded, then process it.
 if ($mform2->is_cancelled()) {
     $cir->cleanup(true);
     redirect($returnurl2);
 } else if ($form2data = $mform2->get_data()) {
+    $form2data->mode = block_badgeawarder_resolve_mode($form2data->mode);
     block_badgeawarder_page_header($course, $context);
     echo $OUTPUT->header(get_string('badgecsvpreview', 'block_badgeawarder'));
     $processor = new block_badgeawarder_processor($cir, $form2data, $courseid);
@@ -124,9 +128,10 @@ if ($mform2->is_cancelled()) {
     echo $OUTPUT->header(get_string('badgecsvpreview', 'block_badgeawarder'));
     $processor->preview($previewrows);
     if ($processor->nothingtodo) {
-        echo html_writer::tag('div', get_string('nothingtodo', 'block_badgeawarder'), array('class' => 'alert alert-warning'));
+        echo html_writer::tag('div', get_string('nothingtodo', 'block_badgeawarder'), ['class' => 'alert alert-warning']);
         echo $OUTPUT->single_button($returnurl2, get_string('nothingtodobutton', 'block_badgeawarder'));
     } else {
         $mform2->display();
     }
+    echo $OUTPUT->footer();
 }

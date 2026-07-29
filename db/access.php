@@ -24,24 +24,24 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
+$capabilities = [
 
-    'block/badgeawarder:uploadcsv' => array(
+    'block/badgeawarder:uploadcsv' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 
-    'block/badgeawarder:addinstance' => array(
+    'block/badgeawarder:addinstance' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(
+        'archetypes' => [
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
-);
+            'manager' => CAP_ALLOW,
+        ],
+    ],
+];

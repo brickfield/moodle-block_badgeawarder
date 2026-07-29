@@ -22,9 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_badgeawarder extends block_base {
-
     /**
-     * Ininitalizes the object.
+     * Initializes the object.
      */
     public function init() {
         $this->title = get_string('blockname', 'block_badgeawarder');
@@ -36,7 +35,7 @@ class block_badgeawarder extends block_base {
      * @return array
      */
     public function applicable_formats() {
-        return array('course' => true);
+        return ['course' => true];
     }
 
     /**
@@ -47,9 +46,9 @@ class block_badgeawarder extends block_base {
     }
 
     /**
-     * Returns true.
+     * Always true — this block always has a settings page.
      *
-     * @return true
+     * @return bool
      */
     public function has_config() {
         return true;
@@ -76,13 +75,7 @@ class block_badgeawarder extends block_base {
             return $this->content;
         }
 
-        if (isset($this->config)) {
-            $config = $this->config;
-        } else {
-            $config = get_config('blocks/badgeawarder');
-        }
-
-        $this->content = new stdClass;
+        $this->content = new stdClass();
         $this->content->text = '';
 
         if (empty($CFG->enablebadges)) {
@@ -93,7 +86,7 @@ class block_badgeawarder extends block_base {
         $context = context_course::instance($this->page->course->id);
 
         if (has_capability('block/badgeawarder:uploadcsv', $context)) {
-            $linkurl = new moodle_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $this->page->course->id));
+            $linkurl = new moodle_url('/blocks/badgeawarder/badgeawarder.php', ['courseid' => $this->page->course->id]);
             $this->content->text .= html_writer::link($linkurl, get_string('uploadbadgecsv', 'block_badgeawarder'));
         }
 
