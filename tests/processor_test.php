@@ -185,6 +185,46 @@ final class processor_test extends \advanced_testcase {
         $this->assertSame(1, $tracker->totals['accountscreated']);
     }
 
+    /**
+     * Tests that execute() preserves non-ASCII characters in firstname/lastname when creating a
+     * new user.
+     *
+     * @param string $firstname
+     * @param string $lastname
+     * @dataProvider non_ascii_name_provider
+     */
+    public function test_execute_creates_user_with_non_ascii_name(string $firstname, string $lastname): void {
+        global $DB;
+        $this->resetAfterTest();
+        $this->setAdminUser();
+
+        $course = $this->getDataGenerator()->create_course();
+        $badge = $this->make_course_badge($course);
+
+        $cir = $this->make_reader($this->basic_csv('nonascii@example.com', $badge->name, $firstname, $lastname));
+        $processor = $this->make_processor($cir, $course->id, \block_badgeawarder_processor::MODE_CREATE_ALL);
+
+        $tracker = new fake_tracker();
+        $processor->execute($tracker);
+
+        $user = $DB->get_record('user', ['email' => 'nonascii@example.com'], '*', MUST_EXIST);
+        $this->assertSame($firstname, $user->firstname);
+        $this->assertSame($lastname, $user->lastname);
+        $this->assertTrue($badge->is_issued($user->id));
+    }
+
+    /**
+     * Data provider of non-ASCII firstname/lastname pairs.
+     *
+     * @return array
+     */
+    public static function non_ascii_name_provider(): array {
+        return [
+            'accented latin' => ['Zoë', 'François'],
+            'non-latin script' => ['田中', '太郎'],
+        ];
+    }
+
     public function test_execute_skips_existing_user_in_create_new_mode(): void {
         $this->resetAfterTest();
         $this->setAdminUser();
