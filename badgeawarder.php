@@ -89,7 +89,6 @@ if (empty($importid)) {
         echo $OUTPUT->heading(get_string('uploadbadgecsv', 'block_badgeawarder') . $OUTPUT->render($icon));
 
         $mform1->display();
-        echo $OUTPUT->single_button(new moodle_url('/course/view.php', ['id' => $course->id]), get_string('back'), '');
         echo $OUTPUT->footer();
         die;
     }
