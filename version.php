@@ -18,14 +18,15 @@
  * Version details
  *
  * @package    block_badgeawarder
- * @copyright  2015 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
+ * @copyright  2026 onward Brickfield Education Labs Ltd, https://www.brickfield.ie
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_badgeawarder';
-$plugin->release = '1.401.01';
-$plugin->version = 2023041701;
-$plugin->requires  = 2022112800; // Moodle 4.1 and higher.
+$plugin->version = 2026061700;
+$plugin->requires  = 2024100700; // Moodle 4.5 and higher.
+$plugin->release = '1.405.00';
 $plugin->maturity = MATURITY_STABLE;
+$plugin->supported = [405, 501];

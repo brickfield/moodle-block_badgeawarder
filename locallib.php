@@ -30,12 +30,30 @@
  */
 function block_badgeawarder_page_header($course, $context) {
     global $PAGE;
-    $badgeawarder = new moodle_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $course->id));
-    $PAGE->set_url('/blocks/badgeawarder/badgeawarder.php', array('courseid' => $course->id, 'contextid' => $context->id));
+    $badgeawarder = new moodle_url('/blocks/badgeawarder/badgeawarder.php', ['courseid' => $course->id]);
+    $PAGE->set_url('/blocks/badgeawarder/badgeawarder.php', ['courseid' => $course->id, 'contextid' => $context->id]);
     $PAGE->set_context($context);
     $PAGE->set_title(get_string('badgecsv', 'block_badgeawarder'));
     $PAGE->set_heading(get_string('badgecsv', 'block_badgeawarder'));
 
     $PAGE->set_title(get_string('badgecsv', 'block_badgeawarder'));
-    $PAGE->navbar->add(get_string('uploadcsv', 'block_badgeawarder'), $badgeawarder , navigation_node::TYPE_CUSTOM);
+    $PAGE->navbar->add(get_string('uploadcsv', 'block_badgeawarder'), $badgeawarder, navigation_node::TYPE_CUSTOM);
+}
+
+/**
+ * Resolves the import mode to use, enforcing the admin-configured default when extended
+ * options are turned off instead of trusting a client-supplied hidden form value.
+ *
+ * @param int $mode the mode requested by the client.
+ * @return int the mode to actually use.
+ */
+function block_badgeawarder_resolve_mode($mode) {
+    $config = get_config('block_badgeawarder');
+    if (!empty($config->showextendedoption)) {
+        return $mode;
+    }
+    if (!empty($config->defaultuploadtype)) {
+        return (int) $config->defaultuploadtype;
+    }
+    return block_badgeawarder_processor::MODE_CREATE_ALL;
 }

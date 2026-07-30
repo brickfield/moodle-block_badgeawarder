@@ -14,22 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once("$CFG->libdir/formslib.php");
 
 /**
- * File containing setp 1 of the upload form
+ * File containing step 2 of the upload form
  *
  * @package    block_badgeawarder
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_badgeawarder_step2_form extends moodleform {
-
     /**
-     * The standard form definiton.
+     * The standard form definition.
      * @return void
      */
     public function definition() {

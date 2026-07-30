@@ -14,24 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/weblib.php');
 
 /**
- * File containing processor class.
+ * File containing the results tracker class, used to render the CSV upload's progress table.
  *
  * @package    block_badgeawarder
  * @copyright  2013 Learning Technology Services, www.lts.ie - Lead Developer: Bas Brands
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_badgeawarder_tracker {
-
-
     /**
      * @var array columns to display.
      */
-    protected $columns = array('firstname', 'lastname', 'email', 'badge');
+    protected $columns = ['firstname', 'lastname', 'email', 'badge'];
 
     /**
      * @var int row number.
@@ -74,19 +71,18 @@ class block_badgeawarder_tracker {
      */
     public function results($awardtotal, $accountscreated, $usersenrolled, $errors) {
 
-        $message = array(
+        $message = [
             get_string('awardtotal', 'block_badgeawarder', $awardtotal),
             get_string('accountscreated', 'block_badgeawarder', $accountscreated),
             get_string('usersenrolled', 'block_badgeawarder', $usersenrolled),
-            get_string('awarderrors', 'block_badgeawarder', $errors)
-        );
+            get_string('awarderrors', 'block_badgeawarder', $errors),
+        ];
 
         $buffer = new progress_trace_buffer(new html_list_progress_trace());
         foreach ($message as $msg) {
             $buffer->output($msg);
         }
         $buffer->finished();
-
     }
 
     /**
@@ -94,8 +90,9 @@ class block_badgeawarder_tracker {
      *
      * @param int $line line number.
      * @param bool $outcome success or not?
-     * @param array $status array of statuses.
-     * @param array $data extra data to display.
+     * @param array|string $status status message(s) — either one string or an array of strings
+     *                             to join with a line break.
+     * @param array $data the parsed CSV row (firstname, lastname, email, badge) to display.
      * @return void
      */
     public function output($line, $outcome, $status, $data) {
@@ -104,23 +101,22 @@ class block_badgeawarder_tracker {
         $ci = 0;
         $this->rownb++;
         if (is_array($status)) {
-            $status = implode(html_writer::empty_tag('br'), $status);
+            $status = count($status) > 1 ? html_writer::alist($status) : reset($status);
         }
         if ($outcome) {
-            $outcome = $OUTPUT->pix_icon('i/valid', '');
+            $outcome = $OUTPUT->pix_icon('i/valid', get_string('iconsuccess', 'block_badgeawarder'));
         } else {
-            $outcome = $OUTPUT->pix_icon('i/invalid', '');
+            $outcome = $OUTPUT->pix_icon('i/invalid', get_string('iconerror', 'block_badgeawarder'));
         }
-        echo html_writer::start_tag('tr', array('class' => 'r' . $this->rownb % 2));
-        echo html_writer::tag('td', $line, array('class' => 'c' . $ci++));
-        echo html_writer::tag('td', $outcome, array('class' => 'c' . $ci++));
-        echo html_writer::tag('td', isset($data['firstname']) ? $data['firstname'] : '', array('class' => 'c' . $ci++));
-        echo html_writer::tag('td', isset($data['lastname']) ? $data['lastname'] : '', array('class' => 'c' . $ci++));
-        echo html_writer::tag('td', isset($data['email']) ? $data['email'] : '', array('class' => 'c' . $ci++));
-        echo html_writer::tag('td', isset($data['badge']) ? $data['badge'] : '', array('class' => 'c' . $ci++));
-        echo html_writer::tag('td', $status, array('class' => 'c' . $ci++));
+        echo html_writer::start_tag('tr', ['class' => 'r' . $this->rownb % 2]);
+        echo html_writer::tag('td', $line, ['class' => 'c' . $ci++]);
+        echo html_writer::tag('td', $outcome, ['class' => 'c' . $ci++]);
+        echo html_writer::tag('td', isset($data['firstname']) ? s($data['firstname']) : '', ['class' => 'c' . $ci++]);
+        echo html_writer::tag('td', isset($data['lastname']) ? s($data['lastname']) : '', ['class' => 'c' . $ci++]);
+        echo html_writer::tag('td', isset($data['email']) ? s($data['email']) : '', ['class' => 'c' . $ci++]);
+        echo html_writer::tag('td', isset($data['badge']) ? s($data['badge']) : '', ['class' => 'c' . $ci++]);
+        echo html_writer::tag('td', $status, ['class' => 'c' . $ci++]);
         echo html_writer::end_tag('tr');
-
     }
 
     /**
@@ -130,18 +126,20 @@ class block_badgeawarder_tracker {
      */
     public function start() {
         $ci = 0;
-        echo html_writer::start_tag('table', array('class' => 'generaltable boxaligncenter flexible-wrap',
-                'summary' => get_string('awardresult', 'block_badgeawarder')));
-        echo html_writer::start_tag('tr', array('class' => 'heading r' . $this->rownb));
-        echo html_writer::tag('th', get_string('csvline', 'block_badgeawarder'),
-        array('class' => 'c' . $ci++, 'scope' => 'col'));
-        echo html_writer::tag('th', get_string('result', 'block_badgeawarder'), array('class' => 'c' . $ci++, 'scope' => 'col'));
-        echo html_writer::tag('th', get_string('firstname'), array('class' => 'c' . $ci++, 'scope' => 'col'));
-        echo html_writer::tag('th', get_string('lastname'), array('class' => 'c' . $ci++, 'scope' => 'col'));
-        echo html_writer::tag('th', get_string('email'), array('class' => 'c' . $ci++, 'scope' => 'col'));
-        echo html_writer::tag('th', get_string('badge', 'block_badgeawarder'), array('class' => 'c' . $ci++, 'scope' => 'col'));
-        echo html_writer::tag('th', get_string('status'), array('class' => 'c' . $ci++, 'scope' => 'col'));
+        echo html_writer::start_tag('table', ['class' => 'generaltable boxaligncenter flexible-wrap']);
+        echo html_writer::tag('caption', get_string('awardresulttablesummary', 'block_badgeawarder'));
+        echo html_writer::start_tag('tr', ['class' => 'heading r' . $this->rownb]);
+        echo html_writer::tag(
+            'th',
+            get_string('csvline', 'block_badgeawarder'),
+            ['class' => 'c' . $ci++, 'scope' => 'col']
+        );
+        echo html_writer::tag('th', get_string('result', 'block_badgeawarder'), ['class' => 'c' . $ci++, 'scope' => 'col']);
+        echo html_writer::tag('th', get_string('firstname'), ['class' => 'c' . $ci++, 'scope' => 'col']);
+        echo html_writer::tag('th', get_string('lastname'), ['class' => 'c' . $ci++, 'scope' => 'col']);
+        echo html_writer::tag('th', get_string('email'), ['class' => 'c' . $ci++, 'scope' => 'col']);
+        echo html_writer::tag('th', get_string('badge', 'block_badgeawarder'), ['class' => 'c' . $ci++, 'scope' => 'col']);
+        echo html_writer::tag('th', get_string('status'), ['class' => 'c' . $ci++, 'scope' => 'col']);
         echo html_writer::end_tag('tr');
     }
-
 }
