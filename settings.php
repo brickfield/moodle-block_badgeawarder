@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot .'/blocks/badgeawarder/processor.php');
+require_once($CFG->dirroot . '/blocks/badgeawarder/processor.php');
 
 if ($ADMIN->fulltree) {
     $checkbox = new admin_setting_configcheckbox(
@@ -37,11 +37,11 @@ if ($ADMIN->fulltree) {
     );
     $settings->add($checkbox);
 
-    $choices = array(
+    $choices = [
         block_badgeawarder_processor::MODE_CREATE_NEW => get_string('awardnew', 'block_badgeawarder'),
         block_badgeawarder_processor::MODE_CREATE_ALL => get_string('awardall', 'block_badgeawarder'),
-        block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder')
-    );
+        block_badgeawarder_processor::MODE_UPDATE_ONLY => get_string('awardexisting', 'block_badgeawarder'),
+    ];
 
     $select = new admin_setting_configselect(
         'block_badgeawarder/defaultuploadtype',
@@ -77,7 +77,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add($select);
 
-    $choices = array('10' => 10, '20' => 20, '100' => 100, '1000' => 1000, '100000' => 100000);
+    $choices = ['10' => 10, '20' => 20, '100' => 100, '1000' => 1000, '100000' => 100000];
 
     $select = new admin_setting_configselect(
         'block_badgeawarder/defaultpreviewrows',

@@ -16,6 +16,8 @@
 
 namespace block_badgeawarder\privacy;
 
+use core_privacy\local\metadata\collection;
+
 /**
  * Privacy API implementation for the Block Badgeawarder plugin.
  * @package    block_badgeawarder
@@ -24,16 +26,33 @@ namespace block_badgeawarder\privacy;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements
-    // This plugin does not store any personal user data.
-    \core_privacy\local\metadata\null_provider {
-
+    \core_privacy\local\metadata\provider {
     /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
+     * Returns metadata about the personal data flows this plugin causes, even though it stores
+     * nothing in tables of its own.
      *
-     * @return  string
+     * @param collection $collection The initialised collection to add items to.
+     * @return collection The updated collection of metadata items.
      */
-    public static function get_reason() : string {
-        return 'privacy:metadata';
+    public static function get_metadata(collection $collection): collection {
+        $collection->add_subsystem_link(
+            'core_user',
+            [],
+            'privacy:metadata:coreuser'
+        );
+
+        $collection->add_subsystem_link(
+            'core_enrol',
+            [],
+            'privacy:metadata:coreenrol'
+        );
+
+        $collection->add_subsystem_link(
+            'core_badges',
+            [],
+            'privacy:metadata:corebadges'
+        );
+
+        return $collection;
     }
 }

@@ -1,5 +1,4 @@
 # Badge CSV Awarder
-Copyright (C) 2025 [Brickfield Education Labs](https://www.brickfield.ie)
 
 ## What is Badge CSV Awarder?
 Save time and effort awarding multiple course badges to your students, by using one CSV file upload instead.
@@ -7,18 +6,21 @@ Save time and effort awarding multiple course badges to your students, by using 
 You also have an optional feature to create users using their details, if enabled in the configuration, and to enrol them onto the badge's course.
 
 ## License
-2025 Onward [Brickfield Education Labs](https://www.brickfield.ie)
+2026 Onward [Brickfield Education Labs](https://www.brickfield.ie)
+
+## Copyright
+2026 Onward [Brickfield Education Labs](https://www.brickfield.ie)
 
 ## Version support
-This plugin has been developed to work on Moodle releases 4.1, 4.4, and 4.5.
+This plugin has been developed to work on Moodle releases 4.5, 5.0, and 5.1.
 
 ## Funding credits
-Initial funding for this plugin was provided by the HSA.
+Initial funding for this plugin was provided by the [HSA](https://www.hsa.ie/).
 
 ## Development
 This plugin has been developed by [Learning Technology Services](https://www.lts.ie) and is maintained by Brickfield Education Labs.
 
-Lead Developer: Bas Brands 
+Original Lead Developer: Bas Brands
 
 ## Important Links
 * [Code repository](https://github.com/brickfield/moodle-block_badgeawarder)
