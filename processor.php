@@ -246,7 +246,10 @@ class block_badgeawarder_processor {
         }
 
         $badge->issue($user->id, true);
-        $teacher = $DB->get_record('role', ['archetype' => 'teacher']);
+        $teachers = $DB->get_records('role', ['archetype' => 'teacher']);
+        foreach ($teachers as $teacher) {
+            $teacher = $teacher;
+        }
         process_manual_award($user->id, $USER->id, $teacher->id, $badge->id);
 
         $user->badgename = $data['badge'];
