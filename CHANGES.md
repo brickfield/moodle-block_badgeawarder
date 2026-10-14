@@ -1,5 +1,10 @@
 Release Notes
 
+##### Release 1.405.01 (Build - 2026061701)
+
+Bug fixes:
+* Better handling for multiple roles.
+
 ##### Release 1.405.00 (Build - 2026061700)
 
 New features:
